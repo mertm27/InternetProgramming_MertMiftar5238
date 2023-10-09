@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do List</title>
+    <style>
+      body {
+          background-color: hsl(149, 58%, 21%);
+      }
+        h1 {
+          color:aquamarine;
+          font-family: arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+  <h1>To do list:</h1>
+  
+  <form id="item-form">
+    <label for="new-item">Enter an item name that you want to add to the list: </label>
+    <input type="text" id="new-item" placeholder="" required>
+    <button type="submit">add</button>
+  </form>
+
+  <ul id="item-list">
+
+  </ul>
+
+  <script>
+    const itemForm = document.getElementById('item-form');
+    const newItemInput = document.getElementById('new-item');
+    const itemList = document.getElementById('item-list');
+    const removeButtons = document.querySelectorAll('.remove-btn');
+
+    function addItem(event) {
+      event.preventDefault(); 
+
+      const newItemText = newItemInput.value.trim();
+
+      if (newItemText !== '') {
+        const newItem = document.createElement('li');
+        newItem.textContent = newItemText;
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'remove';
+        removeButton.classList.add('remove-btn');
+
+        removeButton.addEventListener('click', function() {
+          itemList.removeChild(newItem);
+        });
+
+        newItem.appendChild(removeButton);
+        itemList.appendChild(newItem);
+        newItemInput.value = ''; 
+      }
+    }
+
+    itemForm.addEventListener('submit', addItem);
+
+    removeButtons.forEach(function(removeButton) {
+      removeButton.addEventListener('click', function() {
+        itemList.removeChild(removeButton.parentElement);
+      });
+    });
+  </script>
+</body>
+</html>
